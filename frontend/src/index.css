@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/*
+ * Free-Hire 设计 token (Soft Bento + Minimal Ink)
+ * 详见 docs/specs/ui.md
+ *
+ * 注意:Tailwind v4 的 :root 只放单值(色/数字),
+ * 字体栈在 @layer base 里以 utility class 形式给出。
+ */
+:root {
+  /* 颜色 */
+  --color-bg-canvas: #fafafb;
+  --color-bg-base: #ffffff;
+  --color-bg-muted: #f8f9fb;
+  --color-bg-subtle: #f1f3f6;
+  --color-text-primary: #0f1115;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #9ca3af;
+  --color-text-inverse: #ffffff;
+  --color-border-subtle: #e5e7eb;
+  --color-border-row: #f1f3f6;
+  --color-accent: #0f1115;
+  --color-accent-hover: #111827;
+  /* accent 的低饱和背景:Tailwind 对 var() 不支持 bg-opacity,所以预先算好。
+     由 #0f1115 ≈ rgb(15,17,21) 取 ~6% alpha 得到的"软背景"。 */
+  --color-accent-soft: rgba(15, 17, 21, 0.06);
+  --color-success: #10b981;
+  --color-success-soft: #ecfdf5;
+  --color-warning: #f59e0b;
+  --color-warning-soft: #fffbeb;
+  --color-warning-stroke: #fde68a;
+  --color-warning-text: #b45309;
+  --color-info: #3b82f6;
+  --color-info-soft: #eff6fF;
+  --color-danger: #ef4444;
+  --color-danger-soft: #fef2f2;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    background: var(--color-bg-canvas);
+    color: var(--color-text-primary);
+    font-family: "Inter", system-ui, -apple-system, "PingFang SC",
+      "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+   * Tailwind v4 不再默认给 <button> 加 cursor: pointer(贴近原生 UA 行为)。
+   * Free-Hire 偏好"可点即手指"的传统反馈,这里统一补回来。
+   * - disabled / aria-disabled 仍走默认箭头,符合"不可点"提示
+   * - 同时覆盖 role=button 的非 button 元素(div/span 自定义按钮)
+   */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  /* 字体栈不能放 :root(逗号会破坏 var())。这里以 utility class 暴露。 */
+  .font-heading {
+    font-family: "Geist", "Inter", system-ui, sans-serif;
+  }
+  .font-body {
+    font-family: "Inter", system-ui, "PingFang SC", "Microsoft YaHei",
+      sans-serif;
+  }
+  .font-mono {
+    font-family: "Geist Mono", "JetBrains Mono", ui-monospace, monospace;
+  }
+}
+
+/*
+ * 打印样式:让面试报告页(.print-area)能直接 Cmd/Ctrl+P 导出 PDF
+ * - 隐藏 sidebar / topbar / 操作按钮
+ * - 报告本体撑满 A4 宽度,卡片仍保留 token 色但去掉阴影(打印不需要)
+ */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 24px !important;
+    max-width: none !important;
+  }
+  .print-hide {
+    display: none !important;
+  }
+  /* 卡片去阴影、保留描边 */
+  .print-area [class*="shadow"] {
+    box-shadow: none !important;
+  }
+  /* 避免一题被分页切断 */
+  .print-area pre,
+  .print-area p {
+    page-break-inside: avoid;
+  }
+}

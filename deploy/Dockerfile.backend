@@ -1,0 +1,47 @@
+# Backend Dockerfile —— M0 单阶段镜像,M1 优化为多阶段并裁剪。
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+WORKDIR /app
+
+# 系统依赖:psycopg、cryptography、未来的 OCR/解析库都需要编译工具。
+# M0 先精简,M1 加 OCR 时再扩展。
+# Debian 默认源在国内构建机上常 502,build 时可指定镜像源:
+#   --build-arg APT_MIRROR=mirrors.tuna.tsinghua.edu.cn
+# 不传时走默认 deb.debian.org。
+ARG APT_MIRROR=""
+RUN if [ -n "$APT_MIRROR" ]; then \
+      sed -i "s|deb.debian.org|${APT_MIRROR}|g; s|security.debian.org|${APT_MIRROR}|g" \
+        /etc/apt/sources.list.d/debian.sources 2>/dev/null || \
+      sed -i "s|deb.debian.org|${APT_MIRROR}|g; s|security.debian.org|${APT_MIRROR}|g" \
+        /etc/apt/sources.list 2>/dev/null || true; \
+    fi \
+    && apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        curl \
+        ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY pyproject.toml ./
+# 装运行时 + dev 依赖(pytest 等),便于在容器内直接跑测试。
+# M3 优化时拆分为 prod / dev 两个镜像。
+# 国内 pypi 常超时,build 时可指定:
+#   --build-arg PIP_INDEX=https://pypi.tuna.tsinghua.edu.cn/simple
+ARG PIP_INDEX=""
+RUN pip install --upgrade pip ${PIP_INDEX:+--index-url $PIP_INDEX} \
+ && pip install -e ".[dev]" ${PIP_INDEX:+--index-url $PIP_INDEX}
+
+COPY app ./app
+COPY alembic ./alembic
+COPY alembic.ini ./
+COPY tests ./tests
+
+EXPOSE 8000
+
+# 启动顺序:先跑 alembic upgrade head 把 schema 推到最新,再起 uvicorn。
+# 开发态用 reload 方便迭代;生产部署应改用 gunicorn + uvicorn workers。
+CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"]

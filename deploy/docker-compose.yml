@@ -1,0 +1,114 @@
+# Free-Hire 本地 / 自托管部署 compose。
+# 用法:cd deploy && docker compose up -d
+# 端口:80 = 前端 + /api 反代,5432/6379 仅 docker 网内可见。
+#
+# 对象存储:M0 用本地文件系统(命名卷 object-data),业务代码通过
+# app.infra.storage.ObjectStore 抽象访问。需要分布式/S3 兼容时,
+# 在 build_object_store() 加分支并替换此处的卷或新增服务即可。
+
+name: free-hire
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: freehire
+      POSTGRES_PASSWORD: freehire
+      POSTGRES_DB: freehire
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U freehire -d freehire"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../deploy/Dockerfile.backend
+    restart: unless-stopped
+    env_file:
+      - ../backend/.env.example  # 正式部署时改为你自己的 .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://freehire:freehire@postgres:5432/freehire
+      REDIS_URL: redis://redis:6379/0
+      STORAGE_BACKEND: local
+      STORAGE_ROOT: /var/lib/free-hire/objects
+      # 容器化场景固定机器指纹,避免容器重建后 license 失效。
+      # 生产部署时务必换成你自己的随机值。
+      MACHINE_FINGERPRINT_OVERRIDE: dev-compose-fixed-fingerprint-001
+    volumes:
+      # 简历/解析产物等持久化到命名卷,容器重建不丢数据。
+      # 生产部署建议改 bind mount 到你自己的备份卷。
+      - object-data:/var/lib/free-hire/objects
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    # M0 不直接对外暴露 backend,只通过 nginx 反代。
+    # 调试时可临时加 ports: ["8000:8000"]。
+
+  # 异步 worker:跑 app/workers/tasks/* 里的 celery 任务
+  # (当前主要是简历解析)。共用 backend 镜像,只换启动命令。
+  # broker 默认派生为 redis://redis:6379/1,result backend /2,与
+  # email_sync 锁占用的 /0 隔离。横向扩 worker 副本时,broker 自然分流。
+  worker:
+    build:
+      context: ../backend
+      dockerfile: ../deploy/Dockerfile.backend
+    restart: unless-stopped
+    command:
+      - celery
+      - -A
+      - app.workers.celery_app
+      - worker
+      - --loglevel=info
+      - --concurrency=1
+    env_file:
+      - ../backend/.env.example
+    environment:
+      DATABASE_URL: postgresql+psycopg://freehire:freehire@postgres:5432/freehire
+      REDIS_URL: redis://redis:6379/0
+      STORAGE_BACKEND: local
+      STORAGE_ROOT: /var/lib/free-hire/objects
+      # worker 不签发 license / 不接受 HTTP,但 import app.config 时仍会
+      # 校验 fingerprint。给一个固定值即可。
+      MACHINE_FINGERPRINT_OVERRIDE: dev-compose-fixed-fingerprint-001
+    volumes:
+      # worker 需要读 storage(简历原文件),挂同一个对象卷。
+      - object-data:/var/lib/free-hire/objects
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ../deploy/Dockerfile.frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  pg-data:
+  redis-data:
+  object-data:

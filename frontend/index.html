@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--
+      字体策略: 私有化部署不依赖任何外部 CDN。
+      字体栈走系统字体(PingFang SC / Microsoft YaHei / -apple-system / Segoe UI)
+      在 src/index.css 里声明,客户内网无外网也能正常渲染,且没有 console block warning。
+      若客户希望中英文都用 Inter / Geist,可后续把字体文件 self-host 到 frontend/public/fonts/。
+    -->
+    <title>Free-Hire</title>
+  </head>
+  <body class="h-full">
+    <div id="root" class="h-full"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

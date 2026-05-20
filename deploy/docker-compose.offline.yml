@@ -1,0 +1,103 @@
+# Free-Hire 离线部署 compose
+#
+# 跟 docker-compose.yml 区别:
+# - backend / frontend 用 image: 引用 docker load 进来的本地镜像,不 build
+# - postgres / redis 也用本地镜像(假设目标环境无 Docker Hub 访问)
+# - 镜像 tag 走 ${FREEHIRE_VERSION},install.sh 自动写到 .env
+#
+# 发布包里这个文件会被重命名为 docker-compose.yml，使用时运行:
+#   ./install.sh
+# 或手动:
+#   docker compose --env-file .env up -d
+#
+# 调整好 .env(JWT_SECRET / BOOTSTRAP_ADMIN_* / MACHINE_FINGERPRINT_OVERRIDE)
+# 后这份 compose 通常不需要再改。
+
+name: free-hire
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-freehire}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-freehire}
+      POSTGRES_DB: ${POSTGRES_DB:-freehire}
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-freehire} -d ${POSTGRES_DB:-freehire}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    image: free-hire-backend:${FREEHIRE_VERSION:?需要在 .env 里设置 FREEHIRE_VERSION}
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-freehire}:${POSTGRES_PASSWORD:-freehire}@postgres:5432/${POSTGRES_DB:-freehire}
+      REDIS_URL: redis://redis:6379/0
+      STORAGE_BACKEND: local
+      STORAGE_ROOT: /var/lib/free-hire/objects
+    volumes:
+      - object-data:/var/lib/free-hire/objects
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  # 异步 worker:简历解析等耗时任务从 backend 转给 worker。
+  # 共用 backend 镜像,启动命令不同。redis broker /1 + result /2,与
+  # email_sync 的 /0 隔离。
+  worker:
+    image: free-hire-backend:${FREEHIRE_VERSION:?需要在 .env 里设置 FREEHIRE_VERSION}
+    restart: unless-stopped
+    command:
+      - celery
+      - -A
+      - app.workers.celery_app
+      - worker
+      - --loglevel=info
+      - --concurrency=${CELERY_WORKER_CONCURRENCY:-1}
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-freehire}:${POSTGRES_PASSWORD:-freehire}@postgres:5432/${POSTGRES_DB:-freehire}
+      REDIS_URL: redis://redis:6379/0
+      STORAGE_BACKEND: local
+      STORAGE_ROOT: /var/lib/free-hire/objects
+    volumes:
+      - object-data:/var/lib/free-hire/objects
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  frontend:
+    image: free-hire-frontend:${FREEHIRE_VERSION:?需要在 .env 里设置 FREEHIRE_VERSION}
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${FREEHIRE_HTTP_PORT:-80}:80"
+
+volumes:
+  pg-data:
+  redis-data:
+  object-data:

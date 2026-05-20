@@ -1,0 +1,5 @@
+# 此目录将存放 license 公钥(``public.pem``)。
+# 部署流程:
+# 1. 在 license-tool 目录运行 ``python generator.py keygen --out keys/``
+# 2. 把生成的 ``keys/public.pem`` 复制到当前目录
+# 3. ``private.pem`` 永远不要进入 backend 镜像或代码仓库
