@@ -1,5 +1,3 @@
-# FreeAiHR
-
 # FreeAiHR - AI时代下的人力资源系统-全量代码
 <p align="left">
   <img src="https://img.shields.io/badge/Java-17-orange" alt="Java">
