@@ -1,13 +1,28 @@
-# Free-Hire
+# FreeAiHR
 
-[![CI](https://github.com/yglyeluo-droid/free-hire/actions/workflows/ci.yml/badge.svg)](https://github.com/yglyeluo-droid/free-hire/actions/workflows/ci.yml)
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
+# FreeAiHR - AI时代下的人力资源系统-全量代码
+<p align="left">
+  <img src="https://img.shields.io/badge/Java-17-orange" alt="Java">
+  <img src="https://img.shields.io/badge/Spring%20Boot-3.2.5-green" alt="Spring Boot">
+  <img src="https://img.shields.io/badge/React-18-blue" alt="React">
+  <img src="https://img.shields.io/badge/Ant%20Design-5.x-blue" alt="Ant Design">
+  <img src="https://img.shields.io/badge/PostgreSQL-16-blue" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/License-AGPL-yellow" alt="License">
+</p>
+ 
+## 📖 简介
 
-面向招聘团队的 AI 招聘工作台，覆盖岗位管理、简历解析、候选人沉淀、AI 面试、报告分析与后台治理。
+AI 面试，AI 简历，AI 人力资源！FreeAiHR 是一款企业级、人工智能时代下的智能招聘解决方案，支持私有化部署，AI 驱动的全流程招聘管理系统！
 
-> **快速体验** → [`docs/ops/quickstart.md`](docs/ops/quickstart.md)
-> **部署与运维** → [`docs/ops/customer-guide.md`](docs/ops/customer-guide.md)
-> **离线安装** → [`docs/ops/offline-install.md`](docs/ops/offline-install.md)
+全量代码，无缺失，如遇bug，尽快提交。
+
+# Roadmap 路线图
+
+（1）V1.0功能：企业自助发布简历，求职者可以直接投递；已完成。
+
+（2）V2.0功能：AI辅助面试，AI一面；已完成。
+
+（3）AI培训、AI考核、AI评价；正在开发，欢迎加群，提出建议！！！
 
 ## 项目特性
 
@@ -18,6 +33,12 @@
 - 候选人远程文本 / 语音面试，自动评分并生成报告
 - KPI、漏斗、趋势、评分分布等分析能力
 - 多角色权限、团队协作、SSO、审计与系统配置
+
+## 🤝 体验地址
+FreeAiHR 2.1 版本：
+地址： http://47.100.73.57/ 
+账户： admin@example.com
+密码： vJUqlKw5b6sr4fcA68L7
 
 ## 角色模型
 
@@ -125,21 +146,73 @@ license-tool/   License 生成与续期辅助工具
 - 离线安装：[`docs/ops/offline-install.md`](docs/ops/offline-install.md)
 - 安全披露：[`SECURITY.md`](SECURITY.md)
 
-## 开源与商业授权
+## 🤝 部分截图
 
-本项目以 **[GNU AGPL-3.0](LICENSE)** 协议开源。
+登录页面：
+<img width="1600" height="864" alt="926db4452a465f515ac2a22a4786375a" src="https://github.com/user-attachments/assets/377ab974-7e3a-4c5e-a367-4a4f06b8aa51" />
 
-AGPL 适合以下场景：
+工作岗位发布界面：
+<img width="1183" height="754" alt="8843a450ab16a0616744eb7a5244beb2" src="https://github.com/user-attachments/assets/6519d671-d7a0-4ae1-98ee-b92d2995f747" />
 
-- 学习、评估、内部研究
-- 愿意将修改后的源码继续以 AGPL 方式公开
+HR发布岗位界面：
+<img width="1753" height="829" alt="d7731d1f36aa1146c351acfe3bb4ffec" src="https://github.com/user-attachments/assets/13caa020-4917-4aac-87bf-f1716c05af1a" />
 
-以下场景通常需要单独的商业授权或企业协议：
+工作台界面：
+<img width="1440" height="778" alt="31065121555f4874b08999925bdae5c8" src="https://github.com/user-attachments/assets/82702ca1-a04f-4f68-b463-2a815b247ec6" />
 
-- 希望在商用场景中闭源修改
-- 以 SaaS 或托管服务形式对外提供
-- 集成到闭源产品或商业发行版中
+大模型配置界面：
+<img width="2369" height="1280" alt="70a6f9f13f480f631d50564670700f89" src="https://github.com/user-attachments/assets/2dbfcc4a-88d3-49d7-ae8f-19664fe577b6" />
 
-> 根据 AGPL-3.0 第 13 条，如果你通过网络向他人提供基于本软件的服务，通常需要公开相关修改源码。
+企业个性化界面：
+<img width="1430" height="694" alt="d9ef22a0099c7e6239f62b957075db81" src="https://github.com/user-attachments/assets/eeb8ba0b-4149-4027-a5e0-7a2a145cd3cb" />
 
-**商业授权咨询**：请通过仓库主页、维护者资料或后续补充的官网入口联系。
+AI面试界面：
+<img width="1616" height="921" alt="image" src="https://github.com/user-attachments/assets/8bcb5669-bb2a-444f-b3a6-a38a8e702dd1" />
+
+报告页面：
+<img width="1601" height="923" alt="image" src="https://github.com/user-attachments/assets/892fbbf1-84c5-4391-ad9d-890f370c5b33" />
+
+SSO登录界面，方便使用：
+<img width="1592" height="911" alt="image" src="https://github.com/user-attachments/assets/7f68213d-110f-400a-b8ca-8610940833ec" />
+
+增加了审计功能：
+<img width="1837" height="922" alt="image" src="https://github.com/user-attachments/assets/862ac14d-84ba-4053-b0f2-0fb8fe412f5a" />
+
+
+## 🤝 联系客服小编
+
+点击 # Star后，入群讨论：
+
+<img width="177" height="297.6" alt="3578c36825ef86aff9005442191ccf8b" src="https://github.com/user-attachments/assets/c1c071b9-d658-4f52-bdb9-cd382c5a17fe" />
+
+扫码添加客服小编微信
+
+<img width="205.8" height="282.0" alt="3afe58413fda51e3833432a56742810f" src="https://github.com/user-attachments/assets/bae3f6d8-abfb-4739-8f67-9efd310d8b6a" />
+
+
+如有问题或建议，欢迎提交 Issue 或 Pull Request。
+
+## 开源不易，欢迎打赏
+
+200-2k转账即可（可备注公司名称、个人姓名等标识信息，用于readme中的感谢墙）。
+希望你加群，不断提出需求，在AI时代一起迭代！一起想需求，一起增代码，一起进步！
+
+
+<img width="223.6" height="304.8" alt="66484146948f2c82ae88fd2b4001d8db" src="https://github.com/user-attachments/assets/023c9e16-078b-4810-b40e-ac65535a8c57" />
+
+## 🤝 欢迎使用我们团队的大模型呼叫中心
+
+可访问：
+
+www.freeaicc.com 
+
+www.freeipcc.com
+
+有三个版本：
+1. 外呼系统
+2. 呼入系统
+3. 大模型呼叫中心系统（呼入与呼出）
+
+------------------------
+
+<p align="center">Made with ❤️ by FreeAiHR Team</p>
