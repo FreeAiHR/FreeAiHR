@@ -213,6 +213,19 @@ HR发布岗位界面：
 企业个性化界面：
 <img width="1430" height="694" alt="d9ef22a0099c7e6239f62b957075db81" src="https://github.com/user-attachments/assets/eeb8ba0b-4149-4027-a5e0-7a2a145cd3cb" />
 
+AI面试界面：
+<img width="1616" height="921" alt="image" src="https://github.com/user-attachments/assets/8bcb5669-bb2a-444f-b3a6-a38a8e702dd1" />
+
+报告页面：
+<img width="1601" height="923" alt="image" src="https://github.com/user-attachments/assets/892fbbf1-84c5-4391-ad9d-890f370c5b33" />
+
+SSO登录界面，方便使用：
+<img width="1592" height="911" alt="image" src="https://github.com/user-attachments/assets/7f68213d-110f-400a-b8ca-8610940833ec" />
+
+增加了审计功能：
+<img width="1837" height="922" alt="image" src="https://github.com/user-attachments/assets/862ac14d-84ba-4053-b0f2-0fb8fe412f5a" />
+
+
 ## 🤝 联系客服小编
 
 点击 # Star后，入群讨论：
