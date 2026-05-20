@@ -1,8 +1,0 @@
-keys/private.pem
-keys/*.pem
-tmp-keys/
-tmp-ci-keys/
-*.lic
-__pycache__/
-.venv/
-*.egg-info/
