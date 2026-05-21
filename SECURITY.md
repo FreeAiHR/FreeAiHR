@@ -54,3 +54,7 @@
 ## Acknowledgements
 
 我们感谢负责任披露的安全研究者。已修复的漏洞和报告者会在后续发布说明中按需致谢。
+
+## Contact us
+联系邮箱：lihaiya@gousandian.com
+
