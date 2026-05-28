@@ -39,6 +39,11 @@ FreeAiHR 2.1 版本：
 账户： admin@example.com
 密码： vJUqlKw5b6sr4fcA68L7
 
+## 社区共建：微信社群，一起迭代
+
+<img width="595" height="501" alt="image" src="https://github.com/user-attachments/assets/c5949e7e-7557-4390-ab0f-62a42b85585a" />
+
+
 ## 角色模型
 
 系统默认包含以下角色：
