@@ -10,7 +10,7 @@
  
 ## 📖 简介
 
-AI HR，AI辅助面试，AI面试系统，AI 简历，AI考评系统，AI带教系统，AI培训系统，AI 人力资源，人工智能人力资源系统！AI interview,AI assisted interview,AI resume,AI evaluation system,AI coaching system,AI training system,AI human resources.
+AI HR，AI辅助面试，AI陪练，AI面试系统，AI 简历，AI考评系统，AI带教系统，AI培训系统，AI 人力资源，人工智能人力资源系统！AI interview,AI assisted interview,AI resume,AI evaluation system,AI coaching system,AI training system,AI human resources.
 FreeAiHR 是一款企业级、人工智能时代下的智能招聘解决方案，支持私有化部署，AI 驱动的全流程招聘管理系统！
 
 全量代码，无缺失，如遇bug，尽快提交。
