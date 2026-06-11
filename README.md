@@ -189,7 +189,7 @@ SSO登录界面，方便使用：
 
 点击 # Star后，入群讨论：
 
-<img width="177" height="297.6" alt="3578c36825ef86aff9005442191ccf8b" src="https://github.com/user-attachments/assets/c1c071b9-d658-4f52-bdb9-cd382c5a17fe" />
+<img width="177" height="297.6" alt="3ff867fdf57a51608cdf80f2aa7a353f" src="https://github.com/user-attachments/assets/47e3ae25-5d45-42ea-b169-4c007312bf04" />
 
 扫码添加客服小编微信
 
