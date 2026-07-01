@@ -191,7 +191,8 @@ SSO登录界面，方便使用：
 
 点击 # Star后，入群讨论：
 
-<img width="177" height="297.6" alt="3ff867fdf57a51608cdf80f2aa7a353f" src="https://github.com/user-attachments/assets/47e3ae25-5d45-42ea-b169-4c007312bf04" />
+<img width="255" height="357.5" alt="image" src="https://github.com/user-attachments/assets/2d21b219-e37b-4d65-9d35-5b4e7c714346" />
+
 
 扫码添加客服小编微信
 
@@ -220,7 +221,7 @@ SSO登录界面，方便使用：
 
 4，我们的商业观：长期地、疯狂地创造社会价值，从庞大的价值中，获取一小部分，用于组织的可持续经营。
 
-# 期待你使用我们的其它开源项目：
+# 😄期待你使用我们的其它开源项目：
 
 大模型呼叫中心系统：https://github.com/lihaiya/freeipcc
 
