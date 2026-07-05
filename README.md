@@ -229,6 +229,8 @@ SSO登录界面，方便使用：
 
 大模型智能运维系统：https://github.com/lihaiya/FreeAiOps
 
+Redis集群双活架构工具：https://github.com/GouSanDian/Redis-Syncer-HA-Tool
+
 ------------------------
 
 <p align="center">Made with ❤️ by FreeAiHR Team</p>
