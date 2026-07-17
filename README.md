@@ -221,15 +221,21 @@ SSO登录界面，方便使用：
 
 4，我们的商业观：长期地、疯狂地创造社会价值，从庞大的价值中，获取一小部分，用于组织的可持续经营。
 
-# 😄期待你使用我们的其它开源项目：
+# 🤝欢迎 Star、使用我们团队的其它产品
 
 大模型呼叫中心系统：https://github.com/lihaiya/freeipcc
 
 大模型人力资源系统：https://github.com/FreeAiHR/FreeAiHR
 
-大模型智能运维系统：https://github.com/lihaiya/FreeAiOps
+Redis集群双活架构工具：https://github.com/GouSanDian/Redis-HA-Tool
 
-Redis集群双活架构工具：https://github.com/GouSanDian/Redis-Syncer-HA-Tool
+企业私有化部署的软件管家：https://github.com/GouSanDian/AppHub
+
+自然语言对话数据库（目前在设计阶段）：https://github.com/GouSanDian/Talk-To-DB
+
+大模型沙盘系统（目前在设计阶段）：https://github.com/AiSandTable/AiSandTable
+
+大模型智能运维系统（持续迭代中）：https://github.com/lihaiya/FreeAiOps
 
 ------------------------
 
