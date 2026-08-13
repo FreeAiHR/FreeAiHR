@@ -45,7 +45,7 @@ FreeAiHR 2.1 版本：
 
 ## 社区共建：微信社群，100+企业，一起迭代
 
-<img width="356.5" height="420.5" alt="e3b3ac806c66e0ba1a5641f199e01de9" src="https://github.com/user-attachments/assets/8ae99dd9-66a8-4660-983c-6cb7150781d9" />
+<img width="550" height="650" alt="e3b3ac806c66e0ba1a5641f199e01de9" src="https://github.com/user-attachments/assets/8ae99dd9-66a8-4660-983c-6cb7150781d9" />
 
 ## 角色模型
 
